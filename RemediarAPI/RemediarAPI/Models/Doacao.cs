@@ -1,6 +1,6 @@
 ﻿namespace RemediarAPI.Models
 {
-    public class Doacoes
+    public class Doacao
     {
         public int id { get; set; }
         public string nomeMedicamento { get; set; }

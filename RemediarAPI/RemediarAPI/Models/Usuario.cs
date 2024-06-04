@@ -21,6 +21,6 @@
         public string senha { get; set; }
         public TipoUsuario tipoUsuario { get; set; }
         public List<Pedido>? Pedidos { get; set; }
-        public List<Doacoes>? Doacoes { get; set; }
+        public List<Doacao>? Doacoes { get; set; }
     }
 }

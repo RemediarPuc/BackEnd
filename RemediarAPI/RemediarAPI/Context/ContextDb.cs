@@ -6,7 +6,7 @@ namespace RemediarAPI.Context
 {
     public class ContextDb : DbContext
     {
-        public DbSet<Doacoes> Doacoes { get; set; }
+        public DbSet<Doacao> Doacoes { get; set; }
         public DbSet<Medicamento> Medicamentos { get; set; }
         public DbSet<MedicamentoDescartado> MedicamentosDescartados { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
@@ -26,7 +26,7 @@ namespace RemediarAPI.Context
                     v => (Status)Enum.Parse(typeof(Status), v)
                 );
 
-            modelBuilder.Entity<Doacoes>()
+            modelBuilder.Entity<Doacao>()
                .Property(e => e.statusDoacao)
                .HasConversion(
                    v => v.ToString(),
