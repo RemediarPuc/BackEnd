@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RemediarAPI.Context;
 
@@ -11,9 +12,11 @@ using RemediarAPI.Context;
 namespace RemediarAPI.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    partial class ContextDbModelSnapshot : ModelSnapshot
+    [Migration("20240609201435_atualizandoCampo")]
+    partial class atualizandoCampo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,15 +164,14 @@ namespace RemediarAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("data")
+                    b.Property<DateTime?>("data")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("dataRetirada")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("dosagem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("dosagem")
+                        .HasColumnType("float");
 
                     b.Property<string>("endereco")
                         .IsRequired()
