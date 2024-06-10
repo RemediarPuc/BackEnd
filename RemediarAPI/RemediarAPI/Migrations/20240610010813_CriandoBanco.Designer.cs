@@ -12,8 +12,8 @@ using RemediarAPI.Context;
 namespace RemediarAPI.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    [Migration("20240609234850_RedefinindoEntidadeDoacao")]
-    partial class RedefinindoEntidadeDoacao
+    [Migration("20240610010813_CriandoBanco")]
+    partial class CriandoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,11 +141,12 @@ namespace RemediarAPI.Migrations
                     b.Property<DateTime>("data")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("dataRetirada")
+                    b.Property<DateTime?>("dataRetirada")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("dosagem")
-                        .HasColumnType("float");
+                    b.Property<string>("dosagem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("endereco")
                         .IsRequired()
@@ -162,12 +163,7 @@ namespace RemediarAPI.Migrations
                     b.Property<int>("quantidade")
                         .HasColumnType("int");
 
-                    b.Property<string>("status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("statusPedido")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("telefone")
@@ -178,8 +174,9 @@ namespace RemediarAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("usoContinuo")
-                        .HasColumnType("bit");
+                    b.Property<string>("usoContinuo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<int>("usuarioId")
                         .HasColumnType("int");
