@@ -81,9 +81,22 @@ namespace RemediarAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+		[HttpGet("login/{email}/{senha}")]
+		[ProducesResponseType(typeof(Usuario), 200)]
+		[ProducesResponseType(404)]
+		public async Task<ActionResult<Usuario>> Login(string email, string senha) {
+			var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.email == email && u.senha == senha);
+
+			if (usuario == null) {
+				return NotFound("Email ou senha incorretos");
+			}
+
+			return Ok(new { Message = "Login Realizado com sucesso!", Data = usuario });
+		}
+
+		// POST: api/Usuario
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
           if (_context.Usuarios == null)
