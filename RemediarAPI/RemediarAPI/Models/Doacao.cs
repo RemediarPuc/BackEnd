@@ -1,4 +1,6 @@
-﻿namespace RemediarAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace RemediarAPI.Models
 {
     public class Doacao
     {
@@ -11,6 +13,8 @@
         public double valorDoacao { get; set; }
         public int usuarioId { get; set; }
         public Usuario? Usuario { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Status statusDoacao { get; set; }
     }
 }

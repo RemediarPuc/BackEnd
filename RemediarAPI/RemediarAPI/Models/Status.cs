@@ -4,6 +4,7 @@
     {
         Pendente,
         Aprovado,
-        Concluido
+        Concluido,
+        Reprovado
     }
 }

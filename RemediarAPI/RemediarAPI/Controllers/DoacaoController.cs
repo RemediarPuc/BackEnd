@@ -29,7 +29,8 @@ namespace RemediarAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Doacoes.ToListAsync();
+            //await _context.Doacoes.AsNoTracking().Include(x => x.Usuario).ToListAsync();
+            return Ok(new { Data = await _context.Doacoes.AsNoTracking().Include(x => x.Usuario).ToListAsync() });
         }
 
         // GET: api/Doacao/5
@@ -80,7 +81,32 @@ namespace RemediarAPI.Controllers
 
             return NoContent();
         }
+        [HttpPut("alteraStatus/{id}")]
+        public async Task<IActionResult> PutStatusDoacao(int id, [FromBody]Status status)
+        {
+            Doacao doacao =  await _context.Doacoes.Where(x => x.id == id).FirstOrDefaultAsync();
+            doacao.statusDoacao = status;
 
+            _context.Entry(doacao).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DoacaoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(doacao);
+        }
         // POST: api/Doacao
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
