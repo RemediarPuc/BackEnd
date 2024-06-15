@@ -31,25 +31,7 @@ namespace RemediarAPI.Controllers
 				return NotFound("Nenhuma pedido encontrado");
 			}
 
-			var pedidosComStatus = pedidos.Select(pedido => new {
-				pedido.id,
-				pedido.nomeMedicamento,
-				pedido.dosagem,
-				pedido.unidade,
-				pedido.quantidade,
-				pedido.usoContinuo,
-				pedido.endereco,
-				pedido.nomeUsuario,
-				pedido.telefone,
-				pedido.data,
-				pedido.dataRetirada,
-				pedido.valorPedido,
-				pedido.usuarioId,
-				pedido.Usuario,
-				statusPedido = pedido.statusPedido.HasValue ? pedido.statusPedido.Value.ToString() : ""
-			});
-
-			return Ok(new { Message = "Pedidos encontrados:", Data = pedidosComStatus });
+			return Ok(new { Message = "Pedidos encontrados:", Data = pedidos });
 		}
 
         // GET: api/Pedido/5
