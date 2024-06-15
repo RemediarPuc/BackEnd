@@ -1,4 +1,6 @@
-﻿namespace RemediarAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace RemediarAPI.Models
 {
     public class Pedido
     {
@@ -16,7 +18,8 @@
         public double valorPedido { get; set; }
         public int usuarioId { get; set; }
         public Usuario? Usuario { get; set; }
-        public Status? statusPedido { get; set; }
+		[JsonConverter(typeof(JsonStringEnumConverter))]
+		public Status? statusPedido { get; set; }
 
         public Pedido() {
 			this.statusPedido = Status.Pendente;

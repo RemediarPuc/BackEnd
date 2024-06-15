@@ -25,12 +25,14 @@ namespace RemediarAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
         {
-          if (_context.Pedidos == null)
-          {
-              return NotFound();
-          }
-            return await _context.Pedidos.ToListAsync();
-        }
+			var pedidos = await _context.Pedidos.Include(r => r.Usuario).ToListAsync();
+
+			if (pedidos == null || pedidos.Count == 0) {
+				return NotFound("Nenhuma pedido encontrado");
+			}
+
+			return Ok(new { Message = "Pedidos encontrados:", Data = pedidos });
+		}
 
         // GET: api/Pedido/5
         [HttpGet("{id}")]
@@ -50,9 +52,10 @@ namespace RemediarAPI.Controllers
             return pedido;
         }
 
-        // PUT: api/Pedido/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+
+		// PUT: api/Pedido/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
             if (id != pedido.id)
@@ -81,9 +84,32 @@ namespace RemediarAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Pedido
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPut("atualizaStatus/{id}")]
+        public async Task<ActionResult<IEnumerable<Pedido>>> atualizaStatusPedido(int id) {
+
+            var pedido = await _context.Pedidos.FindAsync(id);
+
+            if (pedido == null) {
+                return NotFound();
+            }
+
+            pedido.statusPedido = Status.Concluido;
+
+            try {
+                await _context.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException) {
+                if (!PedidoExists(id)) {
+                    return NotFound();
+                } else {
+                    throw;
+                }
+            }
+            return await this.GetPedidos(); //vai retornar os pedidos já atualizados
+		}
+
+			// POST: api/Pedido
+			// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+			[HttpPost]
         public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
         {
           if (_context.Pedidos == null)
