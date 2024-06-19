@@ -84,6 +84,28 @@ namespace RemediarAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("byUsuario/{usuarioId}")]
+        public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidosByUsuario(int usuarioId)
+        {
+            if (_context.Pedidos == null)
+            {
+                return NotFound();
+            }
+
+            var pedidos = await _context.Pedidos
+                .Where(p => p.usuarioId == usuarioId)
+                .Include(p => p.Usuario)
+                .ToListAsync();
+
+            if (pedidos == null || pedidos.Count == 0)
+            {
+                return NotFound("Nenhum pedido encontrado para este usuário.");
+            }
+
+            return Ok(new { Message = "Pedidos encontrados:", Data = pedidos });
+        }
+
+
         [HttpPut("atualizaStatus/{id}")]
         public async Task<ActionResult<IEnumerable<Pedido>>> atualizaStatusPedido(int id) {
 
