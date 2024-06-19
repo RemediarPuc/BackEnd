@@ -13,6 +13,8 @@ namespace RemedirAPI.Context
     {
 
     }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -20,4 +22,4 @@ namespace RemedirAPI.Context
 }
 
 }
-}
+
