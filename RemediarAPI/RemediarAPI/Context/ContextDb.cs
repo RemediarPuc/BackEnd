@@ -13,7 +13,7 @@ namespace RemediarAPI.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public ContextDb(DbContextOptions<ContextDb> options) : base(options)
         {
-           
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
