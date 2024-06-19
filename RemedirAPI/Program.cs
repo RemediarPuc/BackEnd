@@ -14,10 +14,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 
-IServiceCollection serviceCollection = builder.Services.AddDbContext<ContextDb>(c =>
-{
-    c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString"));
-});
+builder.Services.AddDbContext<ContextDb>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
