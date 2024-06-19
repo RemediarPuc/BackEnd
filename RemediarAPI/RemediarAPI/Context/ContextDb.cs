@@ -11,6 +11,7 @@ namespace RemediarAPI.Context
         public DbSet<MedicamentoDescartado> MedicamentosDescartados { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<ItemEstoque> ItemEstoques { get; set; }
         public ContextDb(DbContextOptions<ContextDb> options) : base(options)
         {
            
