@@ -106,7 +106,7 @@ namespace RemediarAPI.Controllers
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.id }, usuario);
+            return Ok(usuario);
         }
 
         // DELETE: api/Usuario/5
