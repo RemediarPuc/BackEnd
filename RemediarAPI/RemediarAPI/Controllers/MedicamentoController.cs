@@ -81,6 +81,42 @@ namespace RemediarAPI.Controllers
             return NoContent();
         }
 
+        // PUT: api/Medicamentos/1/darbaixa
+        [HttpPut("{id}/darbaixa")]
+        public async Task<IActionResult> DarBaixa(int id)
+        {
+            var medicamento = await _context.Medicamentos.FindAsync(id);
+            if (medicamento == null)
+            {
+                return NotFound();
+            }
+
+            if (medicamento.Quantidade <= 0)
+            {
+                return BadRequest("Quantidade já está zero.");
+            }
+
+            medicamento.Quantidade -= 1;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicamentoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(medicamento);
+        }
+
         // POST: api/Medicamentos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
