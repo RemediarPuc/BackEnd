@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using RemedirAPI.Context;
+using RemediarAPI.Context;
 using System.Text.Json.Serialization;
-using RemedirAPI.Context;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +13,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 
 builder.Services.AddDbContext<ContextDb>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,7 +30,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
-
 
 app.MapControllers();
 
