@@ -116,6 +116,42 @@ namespace RemediarAPI.Controllers
             return NoContent();
         }
 
+        public class NewMedicamento
+        {
+            public string NomeMedicamento { get; set; }
+            public string Unidade { get; set; }
+            public int Quantidade { get; set; }
+            public DateTime DtVencimento { get; set; }
+            public string Descricao { get; set; }
+            public double Valor { get; set; }
+        }
+
+        // POST: api/Medicamentos/Create (new)
+        [HttpPost("Create")]
+        public async Task<ActionResult<Medicamento>> CreateMedicamento(NewMedicamento medicamentoData)
+        {
+            if (_context.Medicamentos == null)
+            {
+                return Problem("Entity set 'ContextDb.Medicamentos' is null.");
+            }
+
+            // Create a new Medicamento instance with only the provided data
+            var medicamento = new Medicamento
+            {
+                nomeMedicamento = medicamentoData.NomeMedicamento,
+                unidade = medicamentoData.Unidade,
+                quantidade = medicamentoData.Quantidade,
+                dtVencimento = medicamentoData.DtVencimento,
+                descricao = medicamentoData.Descricao,
+                valor = medicamentoData.Valor
+            };
+
+            _context.Medicamentos.Add(medicamento);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetMedicamento", new { id = medicamento.id }, medicamento);
+        }
+
         private bool MedicamentoExists(int id)
         {
             return (_context.Medicamentos?.Any(e => e.id == id)).GetValueOrDefault();
