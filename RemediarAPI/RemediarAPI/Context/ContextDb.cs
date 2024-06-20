@@ -11,6 +11,8 @@ namespace RemediarAPI.Context
         public DbSet<MedicamentoDescartado> MedicamentosDescartados { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<EmissaoRelatorios> emissaoRelatorios { get; set; }
+
         public ContextDb(DbContextOptions<ContextDb> options) : base(options)
         {
            
@@ -39,6 +41,8 @@ namespace RemediarAPI.Context
                     v => v.ToString(),
                     v => (TipoUsuario)Enum.Parse(typeof(TipoUsuario), v)
                 );
+
+            modelBuilder.Entity<EmissaoRelatorios>();
 
         }
     }
