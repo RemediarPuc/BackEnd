@@ -91,12 +91,12 @@ namespace RemediarAPI.Controllers
                 return NotFound();
             }
 
-            if (medicamento.Quantidade <= 0)
+            if (medicamento.quantidade <= 0)
             {
                 return BadRequest("Quantidade já está zero.");
             }
 
-            medicamento.Quantidade -= 1;
+            medicamento.quantidade -= 1;
 
             try
             {
