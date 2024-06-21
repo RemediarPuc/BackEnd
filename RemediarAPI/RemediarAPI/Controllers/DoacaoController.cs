@@ -146,5 +146,30 @@ namespace RemediarAPI.Controllers
         {
             return (_context.Doacoes?.Any(e => e.id == id)).GetValueOrDefault();
         }
+
+        [HttpGet("usuario/{usuarioId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetDoacoesPorUsuario(int usuarioId)
+        {
+            if (_context.Doacoes == null)
+            {
+                return NotFound();
+            }
+
+            var doacoes = await _context.Doacoes
+                .Where(d => d.usuarioId == usuarioId)
+                .Select(d => new 
+                {
+                    DataDoacao = d.dtRetirada,
+                    NomeMedicamento = d.nomeMedicamento
+                })
+                .ToListAsync();
+
+            if (!doacoes.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(doacoes);
+        }
     }
 }
