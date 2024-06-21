@@ -16,4 +16,4 @@ O objetivo do trabalho é criar um sistema eficiente para substituir os métodos
 ## Orientadora
 * Maria Inês Lage de Paula
 
-Link para o sistema: https://front-end-lemon-five.vercel.app/
+Link para o sistema: https://remediar.vercel.app/
