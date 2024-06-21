@@ -63,6 +63,53 @@ namespace RemediarAPI.Migrations
                     b.ToTable("Doacoes");
                 });
 
+            modelBuilder.Entity("RemediarAPI.Models.EmissaoRelatorios", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<double?>("valorTotalDoacao")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("valorTotalMes")
+                        .HasColumnType("float");
+
+                    b.HasKey("id");
+
+                    b.ToTable("emissaoRelatorios");
+                });
+
+            modelBuilder.Entity("RemediarAPI.Models.HistoricoDeDoadores", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NomeCompleto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("endereco")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("qtdTotal")
+                        .HasColumnType("int");
+
+                    b.Property<string>("telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("historicoDeDoadores");
+                });
+
             modelBuilder.Entity("RemediarAPI.Models.Medicamento", b =>
                 {
                     b.Property<int>("id")
@@ -105,6 +152,9 @@ namespace RemediarAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int?>("EmissaoRelatoriosid")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("dtDescarte")
                         .HasColumnType("datetime2");
 
@@ -121,6 +171,8 @@ namespace RemediarAPI.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("id");
+
+                    b.HasIndex("EmissaoRelatoriosid");
 
                     b.HasIndex("medicamentoId");
 
@@ -279,6 +331,10 @@ namespace RemediarAPI.Migrations
 
             modelBuilder.Entity("RemediarAPI.Models.MedicamentoDescartado", b =>
                 {
+                    b.HasOne("RemediarAPI.Models.EmissaoRelatorios", null)
+                        .WithMany("medicamentoDescartados")
+                        .HasForeignKey("EmissaoRelatoriosid");
+
                     b.HasOne("RemediarAPI.Models.Medicamento", "Medicamento")
                         .WithMany("MedicamentosDescartados")
                         .HasForeignKey("medicamentoId")
@@ -297,6 +353,11 @@ namespace RemediarAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("RemediarAPI.Models.EmissaoRelatorios", b =>
+                {
+                    b.Navigation("medicamentoDescartados");
                 });
 
             modelBuilder.Entity("RemediarAPI.Models.Medicamento", b =>

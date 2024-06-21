@@ -12,6 +12,36 @@ namespace RemediarAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "emissaoRelatorios",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    valorTotalMes = table.Column<double>(type: "float", nullable: true),
+                    valorTotalDoacao = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_emissaoRelatorios", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "historicoDeDoadores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    endereco = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    qtdTotal = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_historicoDeDoadores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Medicamentos",
                 columns: table => new
                 {
@@ -40,7 +70,7 @@ namespace RemediarAPI.Migrations
                     genero = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     numPessoaCasa = table.Column<int>(type: "int", nullable: false),
                     escolaridade = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    faixaEtaria = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    faixaEtaria = table.Column<int>(type: "int", nullable: false),
                     rendaFamiliar = table.Column<double>(type: "float", nullable: false),
                     estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     regiao = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -68,7 +98,8 @@ namespace RemediarAPI.Migrations
                     dtVencimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     qtdDescartada = table.Column<int>(type: "int", nullable: false),
                     valorDescartado = table.Column<double>(type: "float", nullable: false),
-                    medicamentoId = table.Column<int>(type: "int", nullable: false)
+                    medicamentoId = table.Column<int>(type: "int", nullable: false),
+                    EmissaoRelatoriosid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,6 +110,11 @@ namespace RemediarAPI.Migrations
                         principalTable: "Medicamentos",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MedicamentosDescartados_emissaoRelatorios_EmissaoRelatoriosid",
+                        column: x => x.EmissaoRelatoriosid,
+                        principalTable: "emissaoRelatorios",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -144,6 +180,11 @@ namespace RemediarAPI.Migrations
                 column: "usuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedicamentosDescartados_EmissaoRelatoriosid",
+                table: "MedicamentosDescartados",
+                column: "EmissaoRelatoriosid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicamentosDescartados_medicamentoId",
                 table: "MedicamentosDescartados",
                 column: "medicamentoId");
@@ -161,6 +202,9 @@ namespace RemediarAPI.Migrations
                 name: "Doacoes");
 
             migrationBuilder.DropTable(
+                name: "historicoDeDoadores");
+
+            migrationBuilder.DropTable(
                 name: "MedicamentosDescartados");
 
             migrationBuilder.DropTable(
@@ -168,6 +212,9 @@ namespace RemediarAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicamentos");
+
+            migrationBuilder.DropTable(
+                name: "emissaoRelatorios");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
