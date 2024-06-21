@@ -9,6 +9,5 @@
         public DateTime dtVencimento { get; set; }
         public string descricao { get; set; }
         public double valor { get; set; }
-        public List<MedicamentoDescartado>? MedicamentosDescartados { get; set; }
     }
 }
