@@ -21,3 +21,11 @@ Link para o sistema:
 https://remediar.vercel.app/
 
 Api backend: https://remediar.azurewebsites.net/swagger/index.html
+
+Acesso para o administrador:
+
+login: admin@gmail.com
+
+senha: adminremediar
+
+
